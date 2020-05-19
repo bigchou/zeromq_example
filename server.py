@@ -1,4 +1,4 @@
-import zmq, time, torch, os, PIL, pdb
+import zmq, time, torch, os, PIL, pdb, json
 from torchvision import transforms, models, datasets
 
 #download the pre-trained weight to the model folder
@@ -32,15 +32,21 @@ socket = context.socket(zmq.REP)
 socket.bind("tcp://*:5555")
 while True:
 	#  Wait for next request from client
-	message = socket.recv()
-	print("Received request: %s" % message)
+	#[STRING BASED]
+	#message = socket.recv()
+	#print("Received request: %s" % message)
+
+	#[JSON BASED]
+	message = socket.recv_json()
+	print("Received request: %s" % message["imgpath"])
 
 	#  Do some 'work'
 	if message:
 		print("make an inference ...")
 		out = None
 		with torch.no_grad():
-			img_name = message
+			#img_name = message
+			img_name = message["imgpath"]
 			sample = PIL.Image.open(img_name).convert("RGB")
 			sample = preprocessing(sample)
 			sample = sample.unsqueeze(0)#(1,3,224,224)
@@ -53,4 +59,11 @@ while True:
 		print(out)
 
 		#  Send reply back to client
-		socket.send(str(out).encode())#require btye object instead of str
+		# [STRING BASED]
+		#socket.send(str(out).encode())#require btye object instead of str
+
+		# [JSON BASED]
+		item = {"out":out}
+		item = json.dumps(item)#dict to str
+		item_json = json.loads(item)#str to dict
+		socket.send_json(item_json)
