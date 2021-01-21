@@ -54,7 +54,16 @@ img = cv2.imdecode(npimg, cv2.IMREAD_COLOR)
 
 1. bytearray or bytes(...) should only store 0 through 255.
 
-# TODO
+# MSGPACK_NUMPY
 
 1. [What is the most efficient way of sending a sequence of different data types with send_multipart() in ZMQ?](https://stackoverflow.com/questions/54047948/what-is-the-most-efficient-way-of-sending-a-sequence-of-different-data-types-wit)
 
+~~~~
+# Python 3.6 v.s. Python 2.7
+python msgpack_server_py2.py
+python msgpack_client.py
+
+# Python 3.6 v.s. Python 3.6
+python msgpack_server_py3.py
+python msgpack_client.py
+~~~~
