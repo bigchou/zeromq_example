@@ -67,3 +67,15 @@ python msgpack_client.py
 python msgpack_server_py3.py
 python msgpack_client.py
 ~~~~
+
+2. [MSGPACK API](https://msgpack-python.readthedocs.io/en/latest/api.html)
+
+3. [List is the default sequence type of Python. But tuple is lighter than list. You can use use_list=False while unpacking when performance is important.](https://github.com/msgpack/msgpack-python/blob/f34fca7fb55e2c8adde39c34ac48542649a24d11/README.md)
+
+4. [max_bin_len(...)](https://github.com/msgpack/msgpack-python/issues/360)
+
+5. [raw=False](https://github.com/msgpack/msgpack-python/issues/318)
+
+6. [raw=False](https://stackoverflow.com/questions/54161523/msgpack-gets-string-data-back-as-binary)
+
+
