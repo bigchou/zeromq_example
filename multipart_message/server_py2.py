@@ -1,4 +1,4 @@
-import zmq, pdb, cv2
+import json, zmq, pdb, cv2
 import numpy as np 
 print("START SERVER")
 context = zmq.Context()
@@ -6,7 +6,7 @@ socket = context.socket(zmq.REP)
 socket.bind("tcp://*:5585")
 while True:
     output = socket.recv_multipart()
-    data1, data2, shape, data3, size = output
+    data1, data2, shape, data3, size, data4 = output
     data1 = data1.decode(encoding='UTF-8')
     shape = [ord(c) for c in shape]
     data2 = np.frombuffer(data2, dtype=np.float64)#dtype should be shown explicitly
@@ -23,4 +23,9 @@ while True:
     print(data3.shape)
     ans = cv2.imread("input.jpg")
     print("IS INPUT THE SAME? ",np.array_equal(ans,data3))
+    print("[output data4]")
+    data4 = json.loads(data4.decode('utf-8'))
+    print(data4['a'])
+    print(data4['b'])
+    print(np.array_equal(ans,np.array(data4['c'])))
     socket.send(str("MY_RESPONSE").encode('UTF-8'))#require btye object instead of str

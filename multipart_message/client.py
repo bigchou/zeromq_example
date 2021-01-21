@@ -1,4 +1,4 @@
-import zmq, cv2
+import json, zmq, cv2
 import numpy as np
 
 # prepare input
@@ -16,7 +16,9 @@ data3 = cv2.imread("input.jpg")
 print(data3.shape,data3.dtype)
 size = np.array(list(data3.shape),dtype=np.int64)
 data3 = data3.reshape(size)
-
+print("[input data4]")
+data4 = {"a":1,"b":"hi","c":cv2.imread("input.jpg").tolist()}
+print(data4)
 
 # init zeromq
 context = zmq.Context()
@@ -28,7 +30,8 @@ socket.send_multipart([
     data2.tobytes(),
     bytes(shape),
     data3.tobytes(),
-    size.tobytes()
+    size.tobytes(),
+    json.dumps(data4).encode('utf-8'),#dict -> str -> bytes
 ])
 message = socket.recv()
 print("RECEIVE RESPONSE FROM SERVER")

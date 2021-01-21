@@ -39,6 +39,17 @@ python client.py # Python 3.6
 
 9. [How to convert bytes in a string to integers? Python](https://stackoverflow.com/questions/3255987/how-to-convert-bytes-in-a-string-to-integers-python)
 
+10. [Convert dictionary to bytes and back again python?](https://stackoverflow.com/questions/19232011/convert-dictionary-to-bytes-and-back-again-python)
+
+11. [使用 OpenCV 不存檔直接讀入 Flask 所傳進的圖片](https://cynthiachuang.github.io/Reading-Image-File-Without-Saving-It-Using-CV2-in-Flask/)
+
+~~~~
+import request
+filestr = request.files['file'].read()
+npimg = numpy.fromstring(filestr, numpy.uint8)
+img = cv2.imdecode(npimg, cv2.IMREAD_COLOR)
+~~~~
+
 # Note
 
 1. bytearray or bytes(...) should only store 0 through 255.
